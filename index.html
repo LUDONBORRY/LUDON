@@ -259,78 +259,100 @@ html {
       user-select: none;
       pointer-events: none;
     }
+.menu {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 75vw;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+  flex-direction: row;
+}
 
-    .menu {
-      display: flex;
-      flex-wrap: nowrap;
-      justify-content: center;
-      gap: 2rem;
-      max-width: 75vw;
-      margin: 1.5rem auto;
-      padding: 0 1rem;
-      flex-direction: row;
-    }
-    .nav-box {
-      position: relative;
-      flex: 1 1 0%;
-      min-width: 0;
-      height: 140px;
+.nav-box {
+  position: relative;
+  flex: 1 1 0%;
+  min-width: 0;
+  height: 140px;
   border-radius: 12px;
   border: 1.2px solid rgba(255,255,255,0.18);
   box-shadow: 0 0 0 0.5px rgba(255,255,255,0.10);
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      color: white;
-      font-size: 1.6rem;
-      cursor: pointer;
-      backdrop-filter: blur(6px);
-      overflow: hidden;
-      text-align: center;
-      user-select: none;
-    }
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: white;
+  font-size: 1.6rem;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  overflow: hidden;
+  text-align: center;
+  user-select: none;
+}
 
-    @media (max-width: 600px) {
-      .nav-box {
-        height: 2.2rem;
-        min-height: 2.2rem;
-        line-height: 2.2rem;
-      }
-    }
-    .nav-box::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-size: cover;
-      background-position: center;
+@media (max-width: 600px) {
+  .menu {
+    flex-wrap: wrap; /* in caso di poco spazio */
+    gap: 0.5rem;     /* riduco il gap tra le box */
+    max-width: 90vw; /* un po' più stretto su mobile */
+  }
+
+  .nav-box {
+    height: 65px !important;         /* più alto (prima 50px) */
+    min-height: 0 !important;
+    width: 100% !important;          /* larghezza piena */
+    max-width: none !important;
+    padding: 0 !important;
+    margin-bottom: 0.3rem !important;
+    font-size: 1.1rem !important;    /* testo leggermente più grande */
+    border-radius: 8px;              /* arrotondamento più soft su mobile */
+  }
+
+  .nav-box span {
+    margin: 0 !important;
+    line-height: 1 !important;
+    padding: 0.4em 0 !important;     /* leggermente più spazio interno */
+  }
+}
+
+.nav-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
   opacity: 0.4;
   z-index: 0;
   filter: brightness(1.25) saturate(1.1);
   transition: opacity 0.3s ease, filter 0.3s ease;
-    }
-    .nav-box:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px var(--arancione);
 }
-    .nav-box:hover::before {
+
+.nav-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px var(--arancione);
+}
+
+.nav-box:hover::before {
   opacity: 0.4;
   filter: brightness(1.35) saturate(1.2);
-    }
-    .nav-box span {
-      position: relative;
-      z-index: 1;
-      text-shadow: 0 0 6px rgba(0,0,0,0.7);
-      margin: 0 0.5rem;
-      line-height: 1.2;
-      white-space: pre-wrap;
-    }
-    .nav-box:nth-child(1)::before { background-image: url('box1.jpg'), url('box1.png'); }
-    .nav-box:nth-child(2)::before { background-image: url('box2.jpg'), url('box2.png'); }
-    .nav-box:nth-child(3)::before { background-image: url('box3.jpg'), url('box3.png'); }
-    .nav-box:nth-child(4)::before { background-image: url('box4.jpg'), url('box4.png'); }
+}
+
+.nav-box span {
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 0 6px rgba(0,0,0,0.7);
+  margin: 0 0.5rem;
+  line-height: 1.2;
+  white-space: pre-wrap;
+}
+
+.nav-box:nth-child(1)::before { background-image: url('box1.jpg'), url('box1.png'); }
+.nav-box:nth-child(2)::before { background-image: url('box2.jpg'), url('box2.png'); }
+.nav-box:nth-child(3)::before { background-image: url('box3.jpg'), url('box3.png'); }
+.nav-box:nth-child(4)::before { background-image: url('box4.jpg'), url('box4.png'); }
 
     /* SCRITTA ULTIME USCITE */
     .ultime-uscite {
@@ -1190,22 +1212,32 @@ section h2:hover {
   right: 16px;
   width: 54px;
   height: 54px;
-  background: linear-gradient(45deg, var(--turchese), var(--arancione) 60%, #fff700 100%, var(--turchese));
-  filter: brightness(1.15) saturate(1.15);
-  background-size: 200% 200%;
   border-radius: 50%;
   z-index: 9999;
-  opacity: 0.95;
-  transform: translateY(0);
+  transform: translate(0,%);
   box-shadow: 0 0 10px 2px rgba(0,217,192,0.15); /* soft glow */
+  overflow: hidden; /* serve per tagliare lo sfondo ::before */
   transition:
     width 0.35s cubic-bezier(0.4,0,0.2,1),
     height 0.35s cubic-bezier(0.4,0,0.2,1),
     border-radius 0.35s cubic-bezier(0.4,0,0.2,1),
     box-shadow 0.35s cubic-bezier(0.4,0,0.2,1),
-    transform 0.35s cubic-bezier(0.4,0,0.2,1),
-    opacity 0.35s cubic-bezier(0.4,0,0.2,1);
-  animation: vortex 12s linear infinite, glowPulse 4s ease-in-out infinite;
+    transform 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* Sfondo con trasparenza gestito da ::before */
+#social-circle::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(45deg, var(--turchese), var(--arancione) 60%, #fff700 100%, var(--turchese));
+  filter: brightness(1.15) saturate(1.15);
+  background-size: 200% 200%;
+  opacity: 0.3; /* chiuso = 50% */
+  animation: vortexExpanded 3s linear infinite, glowPulse 4s ease-in-out infinite;
+  transition: opacity 0.35s ease;
+  z-index: 0;
 }
 
 /* Stato aperto */
@@ -1213,21 +1245,13 @@ section h2:hover {
   width: 70px;
   height: 320px;
   border-radius: 32px;
-  box-shadow: 0 6px 20px rgba(0,217,192,0.18); /* soft glow aperto */
+  box-shadow: 0 6px 20px rgba(0,217,192,0.18);
   transform: translateY(-100%);
 }
 
-/* Animazione sfondo “vortice in acqua” */
-@keyframes vortex {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Animazione glow soft e elegante */
-@keyframes glowPulse {
-  0%, 100% { box-shadow: 0 0 8px 2px rgba(0,217,192,0.12); }
-  50% { box-shadow: 0 0 14px 3px rgba(0,217,192,0.18); }
+#social-circle.expanded::before {
+  opacity: 0.5; /* aperto = 30% */
+  animation: vortexExpanded 3s linear infinite, glowPulse 4s ease-in-out infinite;
 }
 
 /* Icone social */
@@ -1236,26 +1260,41 @@ section h2:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  opacity: 0;
+  opacity: 0; /* invisibili da chiuso */
   pointer-events: none;
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition: opacity 0.35s ease, transform 0.25s ease;
   height: 100%;
   width: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 10000;
+  z-index: 1; /* sopra lo sfondo */
 }
 
+/* Quando il cerchio si apre → icone visibili al 70% */
 #social-circle.expanded #social-icons {
   transform: scaleY(1.05);
-  opacity: 1;
+  opacity: 0.7;
   pointer-events: auto;
 }
 
-#social-circle.closing #social-icons {
-  opacity: 0;
-  pointer-events: none;
+/* Animazioni */
+@keyframes vortex {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes vortexExpanded {
+  0%   { background-position: 0% 50%; }
+  25%  { background-position: 50% 100%; }
+  50%  { background-position: 100% 50%; }
+  75%  { background-position: 50% 0%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 8px 2px rgba(0,217,192,0.12); }
+  50% { box-shadow: 0 0 14px 3px rgba(0,217,192,0.18); }
 }
 
 /* Singolo link social */
