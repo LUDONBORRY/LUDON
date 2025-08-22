@@ -110,7 +110,7 @@ html {
       font-size: clamp(2.5rem, 13vw, 9.5rem);
       text-align: center;
   background: linear-gradient(45deg, var(--turchese), var(--arancione) 60%, #fff700 100%, var(--turchese));
-  filter: brightness(1.3) saturate(1.5);
+  filter: brightness(1.15) saturate(1.15);
       background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -120,9 +120,27 @@ html {
       margin: 1.2rem 0 0.2rem;
     }
     @media (max-width: 480px) {
+      .ultime-uscite {
+        margin: 0.6rem 0 0.5rem 0 !important;
+        height: 1.5em !important;
+        min-height: 0 !important;
+        line-height: 1 !important;
+        max-width: 100vw !important;
+        overflow: hidden !important;
+      }
+      .ultime-uscite {
+        height: 32px !important;
+        min-height: 0 !important;
+        line-height: 1 !important;
+        overflow: hidden !important;
+      }
       h1 {
         font-size: clamp(2.5rem, 15vw, 4.2rem);
         margin: 0.7rem 0 0.2rem;
+      }
+      section h2 {
+        margin-top: 0.05rem !important;
+        margin-bottom: 0.5rem !important;
       }
       .profile-img {
         width: 70px;
@@ -285,6 +303,7 @@ html {
         padding: 0 !important;
         padding-top: 0 !important;
         padding-bottom: 0 !important;
+        margin-bottom: 0.1rem !important;
       }
       .nav-box span {
         margin: 0 !important;
@@ -298,7 +317,7 @@ html {
       inset: 0;
       background-size: cover;
       background-position: center;
-  opacity: 0.32;
+  opacity: 0.4;
   z-index: 0;
   filter: brightness(1.25) saturate(1.1);
   transition: opacity 0.3s ease, filter 0.3s ease;
@@ -308,7 +327,7 @@ html {
       box-shadow: 0 0 20px var(--arancione);
 }
     .nav-box:hover::before {
-  opacity: 0.45;
+  opacity: 0.4;
   filter: brightness(1.35) saturate(1.2);
     }
     .nav-box span {
@@ -445,25 +464,69 @@ html {
       text-shadow: 0 0 12px var(--turchese);
     }
     .cta.spotify {
-      animation: swayWideSmooth 6s ease-in-out infinite;
-    }
-    .cta.soundcloud {
-      animation: swayNarrowSmooth 4s ease-in-out infinite;
-    }
+  color: #1DB954;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: inline-block;
+  margin-top: 0.8rem;
+  text-decoration: none;
+  animation: swaySpotify 3.2s cubic-bezier(0.4,0,0.2,1) infinite;
+  transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+.cta.spotify:hover { text-decoration: underline; }
 
-    @keyframes swayWideSmooth {
-      0%, 100% { transform: translateX(0); }
-      50% { transform: translateX(20px); }
-    }
-    @keyframes swayNarrowSmooth {
-      0%, 100% { transform: translateX(0); }
-      50% { transform: translateX(8px); }
-    }
+.cta.soundcloud {
+  color: #FF5500;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: inline-block;
+  margin-top: 0.8rem;
+  text-decoration: none;
+  animation: swaySoundcloud 2.7s cubic-bezier(0.6,0,0.4,1) infinite;
+  transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+.cta.soundcloud:hover { text-decoration: underline; }
+
+.cta.youtube {
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: inline-block;
+  margin-top: 0.8rem;
+  text-decoration: none;
+  animation: swayYoutube 3.7s cubic-bezier(0.5,0,0.5,1) infinite;
+  transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+.cta.youtube:hover { text-decoration: underline; }
+
+@keyframes swaySpotify {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-7px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(7px); }
+  100% { transform: translateX(0); }
+}
+@keyframes swaySoundcloud {
+  0% { transform: translateX(0); }
+  15% { transform: translateX(6px); }
+  35% { transform: translateX(-5px); }
+  55% { transform: translateX(8px); }
+  75% { transform: translateX(-6px); }
+  100% { transform: translateX(0); }
+}
+@keyframes swayYoutube {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
 
     .divider {
-      border-top: 1px solid rgba(255,255,255,0.1);
-      width: 90%;
-      margin: 2rem auto;
+  border-top: none !important;
+  width: 90%;
+  margin-top: 0 !important;
     }
 
 section {
@@ -478,7 +541,7 @@ section h2 {
   font-size: 2.8rem;
   margin-bottom: 1rem;
   background: linear-gradient(45deg, var(--turchese), var(--arancione) 60%, #fff700 100%, var(--turchese));
-  filter: brightness(1.3) saturate(1.5);
+  filter: brightness(1.15) saturate(1.15);
   background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1112,7 +1175,7 @@ section h2:hover {
   width: 54px;
   height: 54px;
   background: linear-gradient(45deg, var(--turchese), var(--arancione) 60%, #fff700 100%, var(--turchese));
-  filter: brightness(1.3) saturate(1.5);
+  filter: brightness(1.15) saturate(1.15);
   background-size: 200% 200%;
   border-radius: 50%;
   z-index: 9999;
@@ -1236,11 +1299,6 @@ section h2:hover {
 </a>
 <!-- SoundCloud -->
 <a href="https://soundcloud.com" target="_blank" rel="noopener" aria-label="SoundCloud" tabindex="0">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 90" fill="#ff5500" style="transform: scaleY(1.15);">
-    <path d="M77.8 43.3c-.9 0-1.7.1-2.6.3-2.5-10.3-11.6-17.8-22.4-17.8-2.6 0-5.1.4-7.4 1.2-1 .3-1.4.8-1.4 1.8v34.7c0 1 .8 1.8 1.8 1.8h32c7.6 0 13.8-6.2 13.8-13.8-.1-7.6-6.3-13.8-13.8-13.8zM40.9 29.2c-.6 0-1.1.5-1.1 1.1v33.2c0 .6.5 1.1 1.1 1.1.6 0 1.1-.5 1.1-1.1V30.3c0-.6-.5-1.1-1.1-1.1zm-5.8 3.4c-.6 0-1.1.5-1.1 1.1v29.9c0 .6.5 1.1 1.1 1.1.6 0 1.1-.5 1.1-1.1V33.7c0-.6-.5-1.1-1.1-1.1zm-5.8 2.5c-.6 0-1.1.5-1.1 1.1v27.4c0 .6.5 1.1 1.1 1.1.6 0 1.1-.5 1.1-1.1V36.1c0-.6-.5-1.1-1.1-1.1zm-5.8 2.5c-.6 0-1.1.5-1.1 1.1v24.9c0 .6.5 1.1 1.1 1.1.6 0 1.1-.5 1.1-1.1V39.6c0-.6-.5-1.1-1.1-1.1zm-5.8 2.6c-.6 0-1.1.5-1.1 1.1v22.3c0 .6.5 1.1 1.1 1.1.6 0 1.1-.5 1.1-1.1V42.2c0-.6-.5-1.1-1.1-1.1zm-5.8 3.4c-.6 0-1.1.5-1.1 1.1v17.4c0 .6.5 1.1 1.1 1.1.6 0 1.1-.5 1.1-1.1V45.6c0-.6-.5-1.1-1.1-1.1z"/>
-  </svg>
-</a>
-
 <!-- Spotify -->
 <a href="https://spotify.com" target="_blank" rel="noopener" aria-label="Spotify" tabindex="0">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" fill="#ff5500">
@@ -1299,6 +1357,7 @@ section h2:hover {
     </iframe>
   </div>
 </div>
+<a href="https://youtube.com/channel/UCxxxx" target="_blank" rel="noopener" class="cta youtube">Watch more on YouTube</a>
 
 
 </section>
@@ -1576,6 +1635,7 @@ if(bioLangToggle && flagIt && flagUk){
     document.getElementById('bio-desc-1').textContent = bioTexts[bioLang][0];
     // Mostra bandiera attiva
     if(bioLang === 'it'){
+
       flagIt.style.display = 'block';
       flagUk.style.display = 'none';
     }else{
@@ -1783,7 +1843,7 @@ if(bioLangToggle && flagIt && flagUk){
           <div style={{
             width: '100%',
             display: 'flex',
-            justifyContent: 'center',
+            justify-content: 'center',
             alignItems: 'center',
             margin: 0,
             padding: 0,
@@ -1897,7 +1957,6 @@ if(bioLangToggle && flagIt && flagUk){
         );
       }
       // Carosello HIGHLIGHTS: foto
-      // ...existing code...
       const [imgSrcs, setImgSrcs] = React.useState(() => images.map(img => img.base + '.png'));
       const handleImgError = (i, base) => {
         setImgSrcs(srcs => {
