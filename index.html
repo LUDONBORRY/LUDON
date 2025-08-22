@@ -121,7 +121,7 @@ html {
     }
     @media (max-width: 480px) {
       .ultime-uscite {
-        margin: 0.6rem 0 0.5rem 0 !important;
+        margin: 0.3rem 0 0.5rem 0 !important;
         height: 1.5em !important;
         min-height: 0 !important;
         line-height: 1 !important;
@@ -295,20 +295,9 @@ html {
 
     @media (max-width: 600px) {
       .nav-box {
-        height: 32px !important;
-        min-height: 0 !important;
-        width: 100% !important;
-        max-width: none !important;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        padding: 0 !important;
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-        margin-bottom: 0.1rem !important;
-      }
-      .nav-box span {
-        margin: 0 !important;
-        line-height: 1 !important;
-        padding: 0.5em 0 !important;
+        height: 2.2rem;
+        min-height: 2.2rem;
+        line-height: 2.2rem;
       }
     }
     .nav-box::before {
@@ -464,69 +453,96 @@ html {
       text-shadow: 0 0 12px var(--turchese);
     }
     .cta.spotify {
-  color: #1DB954;
-  font-size: 0.95rem;
-  font-weight: 600;
+      animation: swayWideSmooth 6s ease-in-out infinite;
+    }
+    .cta.soundcloud {
+      animation: swayNarrowSmooth 4s ease-in-out infinite;
+    }
+    /* Stile identico alle altre CTA per YouTube */
+    .cta.youtube {
+  color: #fff !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  font-family: inherit !important;
   display: inline-block;
   margin-top: 0.8rem;
   text-decoration: none;
-  animation: swaySpotify 3.2s cubic-bezier(0.4,0,0.2,1) infinite;
-  transition: color 0.4s ease, text-shadow 0.4s ease;
-}
-.cta.spotify:hover { text-decoration: underline; }
-
-.cta.soundcloud {
-  color: #FF5500;
-  font-size: 0.95rem;
-  font-weight: 600;
-  display: inline-block;
-  margin-top: 0.8rem;
-  text-decoration: none;
-  animation: swaySoundcloud 2.7s cubic-bezier(0.6,0,0.4,1) infinite;
-  transition: color 0.4s ease, text-shadow 0.4s ease;
-}
-.cta.soundcloud:hover { text-decoration: underline; }
-
-.cta.youtube {
-  color: #fff;
-  font-size: 0.95rem;
-  font-weight: 600;
-  display: inline-block;
-  margin-top: 0.8rem;
-  text-decoration: none;
-  animation: swayYoutube 3.7s cubic-bezier(0.5,0,0.5,1) infinite;
-  transition: color 0.4s ease, text-shadow 0.4s ease;
+  transition: 0.3s ease;
 }
 .cta.youtube:hover { text-decoration: underline; }
 
+    @keyframes swayWideSmooth {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(20px); }
+    }
+    @keyframes swayNarrowSmooth {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(8px); }
+    }
+
+    /* Animazioni fluide e asincrone per le CTA */
+.cta.spotify {
+  color: #1DB954 !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  font-family: inherit !important;
+  display: inline-block;
+  margin-top: 0.8rem;
+  text-decoration: none;
+  transition: 0.3s ease;
+  animation: swaySpotify 2.7s cubic-bezier(0.4,0,0.2,1) infinite;
+}
+.cta.soundcloud {
+  color: #FF5500 !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  font-family: inherit !important;
+  display: inline-block;
+  margin-top: 0.8rem;
+  text-decoration: none;
+  transition: 0.3s ease;
+  animation: swaySoundcloud 2.3s cubic-bezier(0.6,0,0.4,1) infinite;
+}
+.cta.youtube {
+  color: #fff !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  font-family: inherit !important;
+  display: inline-block;
+  margin-top: 0.8rem;
+  text-decoration: none;
+  transition: 0.3s ease;
+  animation: swayYoutube 2.9s cubic-bezier(0.5,0,0.5,1) infinite;
+}
+.cta.spotify:hover, .cta.soundcloud:hover, .cta.youtube:hover { text-decoration: underline; }
 @keyframes swaySpotify {
   0% { transform: translateX(0); }
-  20% { transform: translateX(-7px); }
-  40% { transform: translateX(4px); }
-  60% { transform: translateX(-4px); }
-  80% { transform: translateX(7px); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(3px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(5px); }
   100% { transform: translateX(0); }
 }
 @keyframes swaySoundcloud {
   0% { transform: translateX(0); }
-  15% { transform: translateX(6px); }
-  35% { transform: translateX(-5px); }
-  55% { transform: translateX(8px); }
-  75% { transform: translateX(-6px); }
+  15% { transform: translateX(4px); }
+  35% { transform: translateX(-4px); }
+  55% { transform: translateX(6px); }
+  75% { transform: translateX(-5px); }
   100% { transform: translateX(0); }
 }
 @keyframes swayYoutube {
   0% { transform: translateX(0); }
-  25% { transform: translateX(-8px); }
-  50% { transform: translateX(5px); }
-  75% { transform: translateX(-5px); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-4px); }
   100% { transform: translateX(0); }
 }
 
     .divider {
-  border-top: none !important;
-  width: 90%;
-  margin-top: 0 !important;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      width: 90%;
+      margin: 2rem auto;
     }
 
 section {
@@ -1299,6 +1315,11 @@ section h2:hover {
 </a>
 <!-- SoundCloud -->
 <a href="https://soundcloud.com" target="_blank" rel="noopener" aria-label="SoundCloud" tabindex="0">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 90" fill="#ff5500" style="transform: scaleY(1.15);">
+    <path d="M77.8 43.3c-.9 0-1.7.1-2.6.3-2.5-10.3-11.6-17.8-22.4-17.8-2.6 0-5.1.4-7.4 1.2-1 .3-1.4.8-1.4 1.8v34.7c0 1 .8 1.8 1.8 1.8h32c7.6 0 13.8-6.2 13.8-13.8-.1-7.6-6.3-13.8-13.8-13.8zM40.9 29.2c-.6 0-1.1.5-1.1 1.1v33.2c0 .6.5 1.1 1.1 1.1.6 0 1.1-.5 1.1-1.1V30.3c0-.6-.5-1.1-1.1-1.1zm-5.8 3.4c-.6 0-1.1.5-1.1 1.1v29.9c0 .6.5 1.1 1.1 1.1.6 0 1.1-.5 1.1-1.1V33.7c0-.6-.5-1.1-1.1-1.1zm-5.8 2.5c-.6 0-1.1.5-1.1 1.1v27.4c0 .6.5 1.1 1.1 1.1.6 0 1.1-.5 1.1-1.1V36.1c0-.6-.5-1.1-1.1-1.1zm-5.8 2.5c-.6 0-1.1.5-1.1 1.1v24.9c0 .6.5 1.1 1.1 1.1.6 0 1.1-.5 1.1-1.1V39.6c0-.6-.5-1.1-1.1-1.1zm-5.8 2.6c-.6 0-1.1.5-1.1 1.1v22.3c0 .6.5 1.1 1.1 1.1.6 0 1.1-.5 1.1-1.1V42.2c0-.6-.5-1.1-1.1-1.1zm-5.8 3.4c-.6 0-1.1.5-1.1 1.1v17.4c0 .6.5 1.1 1.1 1.1.6 0 1.1-.5 1.1-1.1V45.6c0-.6-.5-1.1-1.1-1.1z"/>
+  </svg>
+</a>
+
 <!-- Spotify -->
 <a href="https://spotify.com" target="_blank" rel="noopener" aria-label="Spotify" tabindex="0">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" fill="#ff5500">
@@ -1358,8 +1379,6 @@ section h2:hover {
   </div>
 </div>
 <a href="https://youtube.com/channel/UCxxxx" target="_blank" rel="noopener" class="cta youtube">Watch more on YouTube</a>
-
-
 </section>
 
 <style>
@@ -1635,7 +1654,6 @@ if(bioLangToggle && flagIt && flagUk){
     document.getElementById('bio-desc-1').textContent = bioTexts[bioLang][0];
     // Mostra bandiera attiva
     if(bioLang === 'it'){
-
       flagIt.style.display = 'block';
       flagUk.style.display = 'none';
     }else{
@@ -1843,7 +1861,7 @@ if(bioLangToggle && flagIt && flagUk){
           <div style={{
             width: '100%',
             display: 'flex',
-            justify-content: 'center',
+            justifyContent: 'center',
             alignItems: 'center',
             margin: 0,
             padding: 0,
