@@ -295,20 +295,9 @@ html {
 
     @media (max-width: 600px) {
       .nav-box {
-        height: 32px !important;
-        min-height: 0 !important;
-        width: 100% !important;
-        max-width: none !important;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        padding: 0 !important;
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-        margin-bottom: 0.1rem !important;
-      }
-      .nav-box span {
-        margin: 0 !important;
-        line-height: 1 !important;
-        padding: 0.5em 0 !important;
+        height: 2.2rem;
+        min-height: 2.2rem;
+        line-height: 2.2rem;
       }
     }
     .nav-box::before {
@@ -1201,32 +1190,22 @@ section h2:hover {
   right: 16px;
   width: 54px;
   height: 54px;
+  background: linear-gradient(45deg, var(--turchese), var(--arancione) 60%, #fff700 100%, var(--turchese));
+  filter: brightness(1.15) saturate(1.15);
+  background-size: 200% 200%;
   border-radius: 50%;
   z-index: 9999;
-  transform: translate(0,100%);
+  opacity: 0.95;
+  transform: translateY(0);
   box-shadow: 0 0 10px 2px rgba(0,217,192,0.15); /* soft glow */
-  overflow: hidden; /* serve per tagliare lo sfondo ::before */
   transition:
     width 0.35s cubic-bezier(0.4,0,0.2,1),
     height 0.35s cubic-bezier(0.4,0,0.2,1),
     border-radius 0.35s cubic-bezier(0.4,0,0.2,1),
     box-shadow 0.35s cubic-bezier(0.4,0,0.2,1),
-    transform 0.35s cubic-bezier(0.4,0,0.2,1);
-}
-
-/* Sfondo con trasparenza gestito da ::before */
-#social-circle::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(45deg, var(--turchese), var(--arancione) 60%, #fff700 100%, var(--turchese));
-  filter: brightness(1.15) saturate(1.15);
-  background-size: 200% 200%;
-  opacity: 0.5; /* chiuso = 50% */
-  animation: vortexExpanded 3s linear infinite, glowPulse 4s ease-in-out infinite;
-  transition: opacity 0.35s ease;
-  z-index: 0;
+    transform 0.35s cubic-bezier(0.4,0,0.2,1),
+    opacity 0.35s cubic-bezier(0.4,0,0.2,1);
+  animation: vortex 12s linear infinite, glowPulse 4s ease-in-out infinite;
 }
 
 /* Stato aperto */
@@ -1234,13 +1213,21 @@ section h2:hover {
   width: 70px;
   height: 320px;
   border-radius: 32px;
-  box-shadow: 0 6px 20px rgba(0,217,192,0.18);
+  box-shadow: 0 6px 20px rgba(0,217,192,0.18); /* soft glow aperto */
   transform: translateY(-100%);
 }
 
-#social-circle.expanded::before {
-  opacity: 0.5; /* aperto = 30% */
-  animation: vortexExpanded 3s linear infinite, glowPulse 4s ease-in-out infinite;
+/* Animazione sfondo “vortice in acqua” */
+@keyframes vortex {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Animazione glow soft e elegante */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 8px 2px rgba(0,217,192,0.12); }
+  50% { box-shadow: 0 0 14px 3px rgba(0,217,192,0.18); }
 }
 
 /* Icone social */
@@ -1249,41 +1236,26 @@ section h2:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  opacity: 0; /* invisibili da chiuso */
+  opacity: 0;
   pointer-events: none;
-  transition: opacity 0.35s ease, transform 0.25s ease;
+  transition: opacity 0.25s ease, transform 0.25s ease;
   height: 100%;
   width: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1; /* sopra lo sfondo */
+  z-index: 10000;
 }
 
-/* Quando il cerchio si apre → icone visibili al 70% */
 #social-circle.expanded #social-icons {
   transform: scaleY(1.05);
-  opacity: 0.7;
+  opacity: 1;
   pointer-events: auto;
 }
 
-/* Animazioni */
-@keyframes vortex {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-@keyframes vortexExpanded {
-  0%   { background-position: 0% 50%; }
-  25%  { background-position: 50% 100%; }
-  50%  { background-position: 100% 50%; }
-  75%  { background-position: 50% 0%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes glowPulse {
-  0%, 100% { box-shadow: 0 0 8px 2px rgba(0,217,192,0.12); }
-  50% { box-shadow: 0 0 14px 3px rgba(0,217,192,0.18); }
+#social-circle.closing #social-icons {
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* Singolo link social */
