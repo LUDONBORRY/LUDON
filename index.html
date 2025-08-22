@@ -295,20 +295,9 @@ html {
 
     @media (max-width: 600px) {
       .nav-box {
-        height: 32px !important;
-        min-height: 0 !important;
-        width: 100% !important;
-        max-width: none !important;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        padding: 0 !important;
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-        margin-bottom: 0.1rem !important;
-      }
-      .nav-box span {
-        margin: 0 !important;
-        line-height: 1 !important;
-        padding: 0.5em 0 !important;
+        height: 2.2rem;
+        min-height: 2.2rem;
+        line-height: 2.2rem;
       }
     }
     .nav-box::before {
@@ -1201,32 +1190,22 @@ section h2:hover {
   right: 16px;
   width: 54px;
   height: 54px;
+  background: linear-gradient(45deg, var(--turchese), var(--arancione) 60%, #fff700 100%, var(--turchese));
+  filter: brightness(1.15) saturate(1.15);
+  background-size: 200% 200%;
   border-radius: 50%;
   z-index: 9999;
+  opacity: 0.95;
   transform: translateY(0);
   box-shadow: 0 0 10px 2px rgba(0,217,192,0.15); /* soft glow */
-  overflow: hidden; /* serve per tagliare lo sfondo ::before */
   transition:
     width 0.35s cubic-bezier(0.4,0,0.2,1),
     height 0.35s cubic-bezier(0.4,0,0.2,1),
     border-radius 0.35s cubic-bezier(0.4,0,0.2,1),
     box-shadow 0.35s cubic-bezier(0.4,0,0.2,1),
-    transform 0.35s cubic-bezier(0.4,0,0.2,1);
-}
-
-/* Sfondo con trasparenza gestito da ::before */
-#social-circle::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(45deg, var(--turchese), var(--arancione) 60%, #fff700 100%, var(--turchese));
-  filter: brightness(1.15) saturate(1.15);
-  background-size: 200% 200%;
-  opacity: 0.5; /* chiuso = 50% */
-  animation: vortexExpanded 3s linear infinite, glowPulse 4s ease-in-out infinite;
-  transition: opacity 0.35s ease;
-  z-index: 0;
+    transform 0.35s cubic-bezier(0.4,0,0.2,1),
+    opacity 0.35s cubic-bezier(0.4,0,0.2,1);
+  animation: vortex 12s linear infinite, glowPulse 4s ease-in-out infinite;
 }
 
 /* Stato aperto */
@@ -1234,13 +1213,21 @@ section h2:hover {
   width: 70px;
   height: 320px;
   border-radius: 32px;
-  box-shadow: 0 6px 20px rgba(0,217,192,0.18);
+  box-shadow: 0 6px 20px rgba(0,217,192,0.18); /* soft glow aperto */
   transform: translateY(-100%);
 }
 
-#social-circle.expanded::before {
-  opacity: 0.5; /* aperto = 30% */
-  animation: vortexExpanded 3s linear infinite, glowPulse 4s ease-in-out infinite;
+/* Animazione sfondo “vortice in acqua” */
+@keyframes vortex {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Animazione glow soft e elegante */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 8px 2px rgba(0,217,192,0.12); }
+  50% { box-shadow: 0 0 14px 3px rgba(0,217,192,0.18); }
 }
 
 /* Icone social */
@@ -1249,41 +1236,26 @@ section h2:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  opacity: 0; /* invisibili da chiuso */
+  opacity: 0;
   pointer-events: none;
-  transition: opacity 0.35s ease, transform 0.25s ease;
+  transition: opacity 0.25s ease, transform 0.25s ease;
   height: 100%;
   width: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1; /* sopra lo sfondo */
+  z-index: 10000;
 }
 
-/* Quando il cerchio si apre → icone visibili al 70% */
 #social-circle.expanded #social-icons {
   transform: scaleY(1.05);
-  opacity: 0.7;
+  opacity: 1;
   pointer-events: auto;
 }
 
-/* Animazioni */
-@keyframes vortex {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-@keyframes vortexExpanded {
-  0%   { background-position: 0% 50%; }
-  25%  { background-position: 50% 100%; }
-  50%  { background-position: 100% 50%; }
-  75%  { background-position: 50% 0%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes glowPulse {
-  0%, 100% { box-shadow: 0 0 8px 2px rgba(0,217,192,0.12); }
-  50% { box-shadow: 0 0 14px 3px rgba(0,217,192,0.18); }
+#social-circle.closing #social-icons {
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* Singolo link social */
@@ -1348,6 +1320,852 @@ section h2:hover {
   </svg>
 </a>
 
+<!-- Spotify -->
+<a href="https://spotify.com" target="_blank" rel="noopener" aria-label="Spotify" tabindex="0">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" fill="#ff5500">
+    <path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm109.8 360.2c-4.5 7.1-13.8 9.3-20.9 4.8-57.3-36-129-44.3-213-24.1-8.2 1.8-16.7-3-18.5-11.2-1.8-8.2 3-16.7 11.2-18.5 90.6-19.6 167.7-11.1 229.7 25.9 7.1 4.5 9.3 13.8 4.8 20.9zm27-47.6c-5.6 8.7-17.3 11.4-26 5.8-65.6-41-166-50-241.7-27.1-9.8 2.4-20.2-3.6-22.6-13.4-2.4-9.8 3.6-20.2 13.4-22.6 83.2-20.6 190.6-11.3 261.9 28.3 8.7 5.5 11.4 17.3 5.8 26zm.8-48.8c-74.2-45-196.1-49.2-272.8-26.5-11.1 3-23.1-4-26.1-15.1-3-11.1 4-23.1 15.1-26.1 82.1-22 211.1-17 292.5 28.4 10.9 6.6 14.5 21 7.9 31.9-6.6 10.9-21 14.5-31.9 7.9z"/>
+  </svg>
+</a>
+
+</div>
+
+  <section class="menu" role="navigation" aria-label="Sezioni principali">
+    <div class="nav-box" onclick="scrollToId('about')"><span>ABOUT ME</span></div>
+    <div class="nav-box" onclick="scrollToId('suonato')"><span>HIGHLIGHTS</span></div>
+    <div class="nav-box" onclick="scrollToId('produzione')"><span>MUSIC PRODUCTION</span></div>
+    <div class="nav-box" onclick="scrollToId('eventi')"><span>SERVICE PER EVENTI</span></div>
+  </section>
+
+  <div class="ultime-uscite" role="heading" aria-level="2">HOT NEW MUSIC</div>
+
+ <section class="release-section" aria-label="Player musicali">
+  <!-- Spotify -->
+  <div class="release player-box">
+    <iframe 
+      src="https://open.spotify.com/embed/track/5DiYHTzltm2s4uHiqxxL3Y?utm_source=generator" 
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+      loading="lazy" 
+      title="Spotify Player">
+    </iframe>
+    <a href="https://open.spotify.com/artist/6mdiAmATAx73kdxrNrnlao" 
+       target="_blank" rel="noopener" class="cta spotify">Listen more on Spotify</a>
+  </div>
+
+  <!-- SoundCloud -->
+  <div class="release player-box">
+    <iframe 
+      src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/ludovico-borrini-djludox/jovanotti-ti-porto-via-con-me&color=%23d98324&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false" 
+      allow="autoplay" 
+      loading="lazy" 
+      title="SoundCloud Player">
+    </iframe>
+    <a href="https://soundcloud.com/ludovico-borrini-djludox" 
+       target="_blank" rel="noopener" class="cta soundcloud">Listen more on SoundCloud</a>
+  </div>
+
+  <!-- YouTube -->
+<!-- YouTube sempre centrato 16:9 -->
+<div style="width:100%; max-width:720px; margin:0 auto; position:relative;">
+  <div style="position:relative; width:100%; padding-bottom:56.25%; height:0; margin:0 auto;">
+    <iframe 
+      src="https://www.youtube.com/embed/81nj3zAkF5Q" 
+      title="YouTube video player" 
+      frameborder="0" 
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      allowfullscreen 
+      loading="lazy"
+      style="position:absolute; top:0; left:0; width:100%; height:100%; border:none; border-radius:12px; display:block;">
+    </iframe>
+  </div>
+</div>
+<a href="https://youtube.com/channel/UCxxxx" target="_blank" rel="noopener" class="cta youtube">Watch more on YouTube</a>
+</section>
+
+<style>
+.release-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.release iframe {
+  width: 100%;
+  border-radius: 12px;
+  border: none;
+  max-width: 480px; /* Spotify e SoundCloud */
+  height: 152px; /* altezza standard coerente */
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+/* CTA sotto i player */
+.release .cta {
+  display: inline-block;
+  margin-top: 0.8rem;
+  font-size: 0.95rem;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.cta.spotify { color: #1DB954; }
+.cta.spotify:hover { text-decoration: underline; }
+
+.cta.soundcloud { color: #FF5500; }
+.cta.soundcloud:hover { text-decoration: underline; }
+
+/* YouTube responsive 16:9, sempre centrato */
+/* Contenitore sempre centrato */
+.release.youtube {
+  display: flex !important;
+  justify-content: center !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+
+/* Wrapper mantiene 16:9 */
+.video-wrapper {
+  position: relative !important;
+  width: 100% !important;
+  max-width: 720px !important;   /* puoi aumentare se vuoi */
+  aspect-ratio: 16 / 9 !important;  /* forza 16:9 SEMPRE */
+}
+
+/* Iframe riempie il wrapper */
+.video-wrapper iframe {
+  position: absolute !important;
+  top: 0; left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  border: none !important;
+  border-radius: 12px !important;
+  display: block !important;
+}
+
+
+
+</style>
+
+<div class="about-section">
+  <section id="about">
+    <h2 class="section-title">ABOUT ME</h2>
+
+    <!-- PRIMO BLOCCO -->
+    <div class="bio-block">
+      <div class="bio-img-box">
+        <img src="chisono.jpg" alt="Ludovico Borrini giovane" class="bio-img" />
+      </div>
+
+ <div class="bio-line-and-text" style="position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; margin-bottom: 1rem;">
+  <!-- Linea centrata in tutto lo spazio -->
+  <div class="about-tech-line about-tech-line-between" style="width: 60%; height: 2px; background-color: #ccc;"></div>
+
+  <!-- Bandiera posizionata a destra -->
+  <span id="bio-lang-toggle" style="position: absolute; right: 0; cursor: pointer; display: flex; align-items: center; gap: 4px;">
+    <svg id="flag-it" width="32" height="20" viewBox="0 0 32 20" 
+         style="border-radius:3px; box-shadow:0 1px 4px rgba(0,0,0,0.07); border:1px solid #eee; display:block;" 
+         xmlns="http://www.w3.org/2000/svg">
+      <rect width="32" height="20" fill="#fff"/>
+      <rect x="0" y="0" width="10.67" height="20" fill="#008C45"/>
+      <rect x="21.33" y="0" width="10.67" height="20" fill="#CD212A"/>
+    </svg>
+    <svg id="flag-uk" width="32" height="20" viewBox="0 0 32 20" 
+         style="border-radius:3px; box-shadow:0 1px 4px rgba(0,0,0,0.07); border:1px solid #eee; display:none;" 
+         xmlns="http://www.w3.org/2000/svg">
+      <rect width="32" height="20" fill="#012169"/>
+      <polygon points="0,0 32,20 32,0 0,20" fill="#fff"/>
+      <polygon points="0,0 32,20 32,18 2,0" fill="#C8102E"/>
+      <polygon points="32,0 0,20 0,18 30,0" fill="#C8102E"/>
+      <rect x="13" width="6" height="20" fill="#fff"/>
+      <rect y="7" width="32" height="6" fill="#fff"/>
+      <rect x="14" width="4" height="20" fill="#C8102E"/>
+      <rect y="8" width="32" height="4" fill="#C8102E"/>
+    </svg>
+  </span>
+</div>
+
+
+  <div class="bio-text">
+    <p id="bio-desc-1">
+    Mi chiamo LUDON, ho 25 anni e vengo da Torino,Italia.La mia musica nasce da un intreccio di influenze diverse, che ho respirato crescendo e che oggi rendono unico il mio percorso artistico. Fin da bambino ho sempre sperimentato, spinto dalla curiosità e dal desiderio di creare qualcosa di nuovo. Questo spirito è diventato parte integrante di chi sono e continua a definire ogni aspetto di LUDON.
+
+    </p>
+  </div>
+
+  <div class="about-tech-line about-tech-line-between"></div>
+</div>
+
+    </div>
+
+    <!-- SECONDO BLOCCO -->
+    <div class="bio-block">
+      <div class="bio-img-box">
+        <img src="chisono2.jpg" alt="Ludovico Borrini oggi" class="bio-img" />
+      </div>
+
+      <div class="bio-line-and-text">
+        <div class="about-tech-line about-tech-line-between"></div>
+
+        <div class="bio-text">
+          <p id="bio-desc-2">
+            Oggi sono un producer e DJ, ma prima ancora sono un creativo: mi piace dare forma alle emozioni e rendere ogni momento unico. In un mondo spesso troppo piatto, voglio dare vita a ciò che rompe la monotonia e che ti trasporta. Il mio studio è il mio mondo parallelo, dove le produzioni prendono vita e la magia inizia.
+          </p>
+        </div>
+
+        <div class="about-tech-line about-tech-line-between"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  /* Solo per questa sezione, nessun conflitto */
+  .about-section { display: flex; flex-direction: column; gap: 0; }
+  .bio-block { display: flex; flex-direction: column; align-items: center; width: 100%; }
+  .bio-line-and-text { display: flex; flex-direction: column; align-items: center; width: 100%; }
+  .line-and-flag { display: flex; align-items: center; justify-content: center; width: 100%; gap: 8px; }
+  
+  /* Colore delle linee identico all'originale */
+  .about-tech-line-between { height: 2px; background-color: #ccc; margin: 0.7rem 0; }
+
+  /* Linea centrale per la prima immagine */
+  .line-and-flag .about-tech-line-between { width: 60%; }
+
+  .flag-it-svg, .flag-uk-svg { border-radius: 3px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border:1px solid #eee; }
+  .flag-uk-svg { display: none; }
+  .flag-toggle { cursor: pointer; display: flex; align-items: center; gap: 4px; }
+
+  .bio-text { max-width: 800px; text-align: center; margin: 1.1rem 0; }
+  @media (max-width: 600px) {
+    .bio-text { padding: 0 10vw; }
+  }
+</style>
+
+<script>
+  (function(){
+    const bioToggle = document.getElementById('bio-lang-toggle');
+    const flagIt = document.getElementById('flag-it');
+    const flagUk = document.getElementById('flag-uk');
+    const desc1 = document.getElementById('bio-desc-1');
+    const desc2 = document.getElementById('bio-desc-2');
+
+    const bioText = {
+      it: {
+        desc1: "Mi chiamo LUDON, ho 25 anni e vengo da Torino,Italia.La mia musica nasce da un intreccio di influenze diverse, che ho respirato crescendo e che oggi rendono unico il mio percorso artistico. Fin da bambino ho sempre sperimentato, spinto dalla curiosità e dal desiderio di creare qualcosa di nuovo. Questo spirito è diventato parte integrante di chi sono e continua a definire ogni aspetto di LUDON.",
+        desc2: "Oggi sono un producer e DJ, ma prima ancora sono un creativo: mi piace dare forma alle emozioni e rendere ogni momento unico. In un mondo spesso troppo piatto, voglio dare vita a ciò che rompe la monotonia e che ti trasporta. Il mio studio è il mio mondo parallelo, dove le produzioni prendono vita e la magia inizia."
+      },
+      en: {
+        desc1: "My name is LUDON, I’m 25 years old, and I come from Turin, Italy. My music is born from a blend of diverse influences that I absorbed growing up, and that today make my artistic journey unique. Since I was a child, I’ve always experimented, driven by curiosity and the desire to create something new. This spirit has become an integral part of who I am and continues to shape every aspect of LUDON.",
+        desc2: "Today I’m a producer and DJ, but above all, I’m a creative: I love giving shape to emotions and making every moment unique. In a world that’s often too flat, I aim to create what breaks the monotony and carries you away. My studio is my parallel world, where productions come to life and the magic begins."
+      }
+    };
+
+    let currentLang = 'it';
+
+    bioToggle.addEventListener('click', () => {
+      currentLang = currentLang === 'it' ? 'en' : 'it';
+      desc1.textContent = bioText[currentLang].desc1;
+      desc2.textContent = bioText[currentLang].desc2;
+
+      flagIt.style.display = currentLang === 'it' ? 'block' : 'none';
+      flagUk.style.display = currentLang === 'en' ? 'block' : 'none';
+
+      // Cambia la frase sotto HIGHLIGHTS
+      const placesIntroIt = document.querySelector('.places-intro:not(#places-intro-en)');
+      const placesIntroEn = document.getElementById('places-intro-en');
+      if(currentLang === 'it') {
+        placesIntroIt.style.display = 'block';
+        placesIntroEn.style.display = 'none';
+      } else {
+        placesIntroIt.style.display = 'none';
+        placesIntroEn.style.display = 'block';
+      }
+    });
+  })();
+</script>
+
+    </section>
+    <section id="suonato" style="margin-top:0 !important; padding-top:0;">
+      <h2 class="section-title" style="margin-top:0;">HIGHLIGHTS</h2>
+      <div class="places-intro" style="margin-top:0.1rem;">Alcuni dei posti che mi sono rimasti più a cuore</div>
+      <div class="places-intro" id="places-intro-en" style="margin-top:0.1rem; display:none;">Places that left a mark on my heart</div>
+      <!-- Nuovo carosello centrato -->
+      <div id="carousel-suonato-wrapper"></div>
+    </section>
+  </div>
+
+  <section id="produzione">
+    <h2 class="section-title">MUSIC PRODUCTION</h2>
+    <div class="studio-description">
+      <p>Uno studio creativo e professionale, dove ogni progetto prende forma con originalità e cura per un sound unico e riconoscibile.</p>
+    </div>
+    <!-- Nuovo carosello centrato -->
+    <div id="carousel-produzione-wrapper"></div>
+    <div class="boxes-container" id="produzione">
+      <div class="box"><span>VOCAL RECORDING</span><small>Registrazioni professionali </small></div>
+      <div class="box"><span>MIX & MASTERING</span><small>Qualità radio e streaming garantita</small></div>
+      <div class="box"><span>PRODUCTION</span><small>Produzione musicale su misura</small></div>
+      <div class="box"><span>VIDEO</span><small> Dai sfogo alla tua fantasia</small></div>
+    </div>
+    <div style="width:100%;text-align:center;margin:1.5rem 0 0.5rem 0;">
+  <a href="#footer-contatti" style="display:inline-block;font-size:clamp(0.85rem,2.5vw,1.1rem);color:#fff;font-weight:600;letter-spacing:0.01em;cursor:pointer;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:0.5px;">Raccontami la tua idea. Insieme possiamo realizzarla</a>
+    </div>
+  </section>
+
+  <section id="eventi">
+    <h2 class="section-title">SERVICE PER EVENTI</h2>
+    <div class="eventi-intro">Servizi per rendere unico ogni evento</div>
+    <div class="boxes-container">
+      <div class="box"><span>PRIVATE EVENTS</span><small> DJ e performance per ogni evento </small></div>
+      <div class="box"><span>NOLEGGIO IMPIANTO AUDIO</span><small>Impianti adatti a ogni spazio</small></div>
+      <div class="box"><span>NOLEGGIO LUCI & LASER</span><small>Illuminazione d'impatto</small></div>
+      <div class="box"><span>CREAZIONE EVENTO A 360°</span><small>Esperienze complete e memorabili</small></div>
+    <div class="box"><span>OGGETTI PERSONALIZZATI IN 3D</span><small>Gadget e decorazioni uniche</small></div>
+    </div>
+    <div style="width:100%;text-align:center;margin:1.5rem 0 0.5rem 0;">
+  <a href="#footer-contatti" style="display:inline-block;font-size:clamp(0.85rem,2.5vw,1.1rem);color:#fff;font-weight:600;letter-spacing:0.01em;cursor:pointer;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:0.5px;">Hai un progetto in mente? Scrivimi in privato per parlarne!</a>
+    </div>
+  </section>
+
+  <script>
+// Toggle lingua per bio about me con SVG bandiere
+const bioLangToggle = document.getElementById('bio-lang-toggle');
+const flagIt = document.getElementById('flag-it');
+const flagUk = document.getElementById('flag-uk');
+let bioLang = 'it';
+const bioTexts = {
+  it: [
+    'Mi chiamo LUDON, ho 25 anni e vengo da Torino,Italia.La mia musica nasce da un intreccio di influenze diverse, che ho respirato crescendo e che oggi rendono unico il mio percorso artistico. Fin da bambino ho sempre sperimentato, spinto dalla curiosità e dal desiderio di creare qualcosa di nuovo. Questo spirito è diventato parte integrante di chi sono e continua a definire ogni aspetto di LUDON.',
+    'Oggi sono un producer e DJ, ma prima ancora sono un creativo: mi piace costruire atmosfere, dare forma alle emozioni e rendere ogni momento unico. Il mio studio è il mio mondo parallelo, dove le produzioni prendono vita e la magia inizia ( e la mia ossessione per i dettagli può dare libero sfogo)'
+  ],
+  en: [
+    "My name is LUDON, I’m 25 years old, and I come from Turin, Italy. My music is born from a blend of diverse influences that I absorbed growing up, and that today make my artistic journey unique. Since I was a child, I’ve always experimented, driven by curiosity and the desire to create something new. This spirit has become an integral part of who I am and continues to shape every aspect of LUDON.",
+    "Today I’m a producer and DJ, but above all, I’m a creative: I love giving shape to emotions and making every moment unique. In a world that’s often too flat, I aim to create what breaks the monotony and carries you away. My studio is my parallel world, where productions come to life and the magic begins."
+  ]
+};
+if(bioLangToggle && flagIt && flagUk){
+  bioLangToggle.addEventListener('click', function() {
+    bioLang = bioLang === 'it' ? 'en' : 'it';
+    document.getElementById('bio-desc-1').textContent = bioTexts[bioLang][0];
+    // Mostra bandiera attiva
+    if(bioLang === 'it'){
+      flagIt.style.display = 'block';
+      flagUk.style.display = 'none';
+    }else{
+      flagIt.style.display = 'none';
+      flagUk.style.display = 'block';
+    }
+  });
+  // Imposta lingua iniziale
+  document.getElementById('bio-desc-1').textContent = bioTexts['it'][0];
+  flagIt.style.display = 'block';
+  flagUk.style.display = 'none';
+}
+    function scrollToId(id) {
+      document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
+    }
+
+    // Animazione ingresso per la scritta LUDON
+    function showMainTitle() {
+      var el = document.getElementById('main-title');
+      if (!el) return;
+      el.classList.add('show-title');
+    }
+    if ('IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function(entries, obs) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            showMainTitle();
+            obs.disconnect();
+          }
+        });
+      }, { threshold: 0.5 });
+      observer.observe(document.getElementById('main-title'));
+    } else {
+      // Fallback per browser vecchi
+      document.addEventListener('DOMContentLoaded', showMainTitle);
+    }
+
+    // Animazione titolo LUDON: fade+slide quando entra in viewport
+    document.addEventListener('DOMContentLoaded', function() {
+      var title = document.getElementById('main-title');
+      if (title) {
+        function showTitle(entries) {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              title.classList.add('show-title');
+            } else {
+              title.classList.remove('show-title');
+            }
+          });
+        }
+        var observer = new window.IntersectionObserver(showTitle, {
+          threshold: 0.6
+        });
+        observer.observe(title);
+      }
+
+      // Sezione: animazione titoli h2
+      var sectionTitles = document.querySelectorAll('section h2.section-title');
+      sectionTitles.forEach(function(h2) {
+        h2.classList.remove('show-title');
+        // IntersectionObserver per fade+slide in
+        if ('IntersectionObserver' in window) {
+          var obs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                h2.classList.add('show-title');
+              } else {
+                h2.classList.remove('show-title');
+              }
+            });
+          }, { threshold: 0.6 });
+          obs.observe(h2);
+        } else {
+          // fallback
+          h2.classList.add('show-title');
+        }
+        // Hover: forza animazione
+        h2.addEventListener('mouseenter', function() {
+          h2.classList.add('show-title');
+        });
+        h2.addEventListener('mouseleave', function() {
+          // Se non è in viewport, togli show-title
+          if (!h2.getBoundingClientRect) return;
+          var rect = h2.getBoundingClientRect();
+          if (rect.top < 0 || rect.bottom > (window.innerHeight || document.documentElement.clientHeight)) {
+            h2.classList.remove('show-title');
+          }
+        });
+      });
+    });
+  </script>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script type="text/babel">
+    // Nuova versione: box carosello centrato, padding laterale, nessun overflow, sempre spazio uguale ai lati
+    // Per ogni foto, tenta prima il .png, se fallisce mostra il .jpg
+    // Puoi aggiungere la location come campo "location" per ogni foto
+    const imagesSuonato = [
+      { base: 'place1', alt: 'Lingotto, Torino', location: 'Lingotto, Torino' },
+      { base: 'place2', alt: 'ToVision, Pala Ruffini, Torino', location: 'ToVision, Pala Ruffini, Torino' },
+      { base: 'place3', alt: 'Sestriere', location: 'Sestriere' },
+      { base: 'place4', alt: 'Santa Margherita Ligure', location: 'Santa Margherita Ligure' },
+      { base: 'place5', alt: 'Finale Ligure', location: 'Finale Ligure' },
+      { base: 'place6', alt: 'Nuoro, Sardegna', location: 'Nuoro, Sardegna' },
+      { base: 'place7', alt: "Capoliveri, Isola d'Elba", location: "Capoliveri, Isola d'Elba" },
+      { base: 'place8', alt: 'Nave GNV', location: 'Nave GNV' },
+      { base: 'place9', alt: 'Palco 19, Asti', location: 'Palco 19, Asti' },
+      { base: 'place10', alt: 'La Caletta, Sardegna', location: 'La Caletta, Sardegna' },
+      { base: 'place11', alt: 'Zero club, Alassio', location: 'Zero club, Alassio' }
+      ,{ base: 'place12', alt: 'Bivona, Sicilia', location: 'Bivona, Sicilia' }
+    ];
+    const imagesProduzione = [
+      { src: 'studio1.gif', alt: 'Studio 1' },
+      { src: 'studio2.gif', alt: 'Studio 2' },
+      { src: 'studio3.gif', alt: 'Studio 3' },
+      { src: 'studio4.gif', alt: 'Studio 4' }
+    ];
+
+    function CenteredCarousel({ images, wide }) {
+      // Gestione index PRIMA degli hook typewriter
+      const [index, setIndex] = React.useState(0);
+      const n = images.length;
+      const prev = () => setIndex(i => (i - 1 + n) % n);
+      const next = () => setIndex(i => (i + 1) % n);
+      // Typewriter effect solo per il carosello "DOVE HO SUONATO?" (wide non passato)
+      // isSuonato già definito sopra, non ridefinire
+      const [typedText, setTypedText] = React.useState('');
+      const [typing, setTyping] = React.useState(false);
+      React.useEffect(() => {
+        if (!isSuonato) return;
+        const location = images[index].location || images[index].alt;
+        setTypedText('');
+        setTyping(true);
+        let i = 0;
+        const type = () => {
+          setTypedText(location.slice(0, i));
+          if (i <= location.length) {
+            i++;
+            setTimeout(type, 45);
+          } else {
+            setTyping(false);
+          }
+        };
+        type();
+        // eslint-disable-next-line
+      }, [index, isSuonato]);
+      React.useEffect(() => {
+        const handleKey = e => {
+          if (e.key === 'ArrowLeft') prev();
+          if (e.key === 'ArrowRight') next();
+        };
+        window.addEventListener('keydown', handleKey);
+        return () => window.removeEventListener('keydown', handleKey);
+      }, []);
+      React.useEffect(() => {
+        const interval = setInterval(next, 3500);
+        return () => clearInterval(interval);
+      }, [index]);
+      // Responsive: più largo su desktop, classico su mobile
+      // wide=true: maxWidth 900, aspectRatio 16/7, minHeight 380, height min(48vw, 420px)
+      // wide=false: maxWidth 440, aspectRatio 4/3, minHeight 380, height min(60vw, 480px)
+      const isWide = wide && window.innerWidth > 900;
+      // Se il carosello è "DOVE HO SUONATO?" (wide non passato), aumentiamo l'altezza
+      const isSuonato = !wide;
+      const carouselStyle = isWide
+        ? {
+            width: '96vw',
+            maxWidth: 900,
+            aspectRatio: '16/7',
+            background: '#111',
+            borderRadius: 20,
+            overflow: 'hidden',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 0 40px rgba(0,0,0,0.7)',
+            position: 'relative',
+            margin: '0 auto',
+            padding: 0,
+            minHeight: isSuonato ? '480px' : '380px',
+            height: isSuonato ? 'min(80vw, 600px)' : 'min(48vw, 420px)',
+          }
+        : {
+            width: '92vw',
+            maxWidth: 440,
+            aspectRatio: '4/3',
+            background: '#111',
+            borderRadius: 16,
+            overflow: 'hidden',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 0 32px rgba(0,0,0,0.7)',
+            position: 'relative',
+            margin: '0 auto',
+            padding: 0,
+            minHeight: isSuonato ? '480px' : '380px',
+            height: isSuonato ? 'min(80vw, 600px)' : 'min(60vw, 480px)',
+          };
+      // Carosello produzione: gif, carosello suonato: foto
+      if (wide) {
+        // Carosello MUSIC PRODUCTION: gif
+        return (
+          <div style={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            margin: 0,
+            padding: 0,
+            boxSizing: 'border-box',
+          }}>
+            <div style={carouselStyle}>
+              <div style={{
+                width: '100%',
+                height: '100%',
+                position: 'relative',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+                {images.map((img, i) => (
+                  <React.Fragment key={img.src}>
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      style={{
+                        opacity: i === index ? 1 : 0,
+                        zIndex: 1,
+                        transition: 'opacity 0.6s cubic-bezier(0.4,0,0.2,1)',
+                        objectFit: 'cover',
+                        width: '100%',
+                        height: '100%',
+                        maxWidth: '100%',
+                        maxHeight: '100%',
+                        minWidth: 0,
+                        minHeight: 0,
+                        display: 'block',
+                        borderRadius: 16,
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        pointerEvents: 'none',
+                      }}
+                    />
+                    {i === index && (
+                      <div
+                        className="caption"
+                        style={{
+                          position: 'absolute',
+                          bottom: 12,
+                          left: 12,
+                          background: 'rgba(0,0,0,0.5)',
+                          color: 'white',
+                          padding: '6px 12px',
+                          borderRadius: 8,
+                          fontWeight: 600,
+                          maxWidth: '70%',
+                          userSelect: 'none',
+                          pointerEvents: 'none',
+                          fontFamily: 'monospace',
+                          fontSize: '1.15rem',
+                          letterSpacing: '0.01em',
+                          minHeight: '2.2em',
+                          zIndex: 2
+                        }}
+                      >
+                        {img.alt}
+                      </div>
+                    )}
+                  </React.Fragment>
+                ))}
+                <div
+                  className="arrow left"
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: 10,
+                    transform: 'translateY(-50%)',
+                    background: 'rgba(0,0,0,0.4)',
+                    borderRadius: '50%',
+                    color: 'white',
+                    fontSize: '2rem',
+                    width: 40,
+                    height: 40,
+                    lineHeight: '40px',
+                    textAlign: 'center',
+                    cursor: 'pointer',
+                    userSelect: 'none',
+                    zIndex: 10,
+                  }}
+                  onClick={prev}
+                >&#10094;</div>
+                <div
+                  className="arrow right"
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    right: 10,
+                    transform: 'translateY(-50%)',
+                    background: 'rgba(0,0,0,0.4)',
+                    borderRadius: '50%',
+                    color: 'white',
+                    fontSize: '2rem',
+                    width: 40,
+                    height: 40,
+                    lineHeight: '40px',
+                    textAlign: 'center',
+                    cursor: 'pointer',
+                    userSelect: 'none',
+                    zIndex: 10,
+                  }}
+                  onClick={next}
+                >&#10095;</div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+      // Carosello HIGHLIGHTS: foto
+      const [imgSrcs, setImgSrcs] = React.useState(() => images.map(img => img.base + '.png'));
+      const handleImgError = (i, base) => {
+        setImgSrcs(srcs => {
+          const newSrcs = [...srcs];
+          if (!srcs[i].endsWith('.jpg')) newSrcs[i] = base + '.jpg';
+          return newSrcs;
+        });
+      };
+      return (
+        <div style={{
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          margin: 0,
+          padding: 0,
+          boxSizing: 'border-box',
+        }}>
+          <div style={carouselStyle}>
+            <div style={{
+              width: '100%',
+              height: '100%',
+              position: 'relative',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+              {images.map((img, i) => (
+                <React.Fragment key={img.base}>
+                  <img
+                    src={imgSrcs[i]}
+                    alt={img.alt}
+                    onError={() => handleImgError(i, img.base)}
+                    style={{
+                      opacity: i === index ? 1 : 0,
+                      zIndex: 1,
+                      transition: 'opacity 0.8s cubic-bezier(0.4,0,0.2,1)',
+                      objectFit: 'cover',
+                      width: '100%',
+                      height: '100%',
+                      maxWidth: '100%',
+                      maxHeight: '100%',
+                      minWidth: 0,
+                      minHeight: 0,
+                      display: i === index ? 'block' : 'none',
+                      borderRadius: 16,
+                      position: 'absolute',
+                      top: 0,
+                      left: 0
+                    }}
+                  />
+                  {i === index && (
+                    <div
+                      className="caption"
+                      style={{
+                        position: 'absolute',
+                        bottom: 12,
+                        left: 12,
+                        background: 'rgba(0,0,0,0.5)',
+                        color: 'white',
+                        padding: '6px 12px',
+                        borderRadius: 8,
+                        fontWeight: 600,
+                        maxWidth: '70%',
+                        userSelect: 'none',
+                        pointerEvents: 'none',
+                        fontFamily: 'monospace',
+                        fontSize: '1.15rem',
+                        letterSpacing: '0.01em',
+                        minHeight: '2.2em',
+                        zIndex: 2
+                      }}
+                    >
+                      {isSuonato ? (
+                        <span>{typedText}<span style={{opacity: typing ? 1 : 0}}>|</span></span>
+                      ) : (
+                        images[index].alt
+                      )}
+                    </div>
+                  )}
+                </React.Fragment>
+              ))}
+              <div
+
+                className="arrow left"
+               
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: 10,
+                  transform: 'translateY(-50%)',
+                  background: 'rgba(0,0,0,0.4)',
+                  borderRadius: '50%',
+                  color: 'white',
+                  fontSize: '2rem',
+                  width: 40,
+                  height: 40,
+                  lineHeight: '40px',
+                  textAlign: 'center',
+                  cursor: 'pointer',
+                  userSelect: 'none',
+                  zIndex: 10,
+                }}
+                onClick={prev}
+              >&#10094;</div>
+              <div
+                className="arrow right"
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  right: 10,
+                  transform: 'translateY(-50%)',
+                  background: 'rgba(0,0,0,0.4)',
+                  borderRadius: '50%',
+                  color: 'white',
+                  fontSize: '2rem',
+                  width: 40,
+                  height: 40,
+                  lineHeight: '40px',
+                  textAlign: 'center',
+                  cursor: 'pointer',
+                  userSelect: 'none',
+                  zIndex: 10,
+                }}
+                onClick={next}
+              >&#10095;</div>
+              {/* Caption con typewriter solo per carosello suonato */}
+              <div
+                className="caption"
+                style={{
+                  position: 'absolute',
+                  bottom: 12,
+                  left: 12,
+                  background: 'rgba(0,0,0,0.5)',
+                  color: 'white',
+                  padding: '6px 12px',
+                  borderRadius: 8,
+                  fontWeight: 600,
+                  maxWidth: '70%',
+                  userSelect: 'none',
+                  pointerEvents: 'none',
+                  fontFamily: 'monospace',
+                  fontSize: '1.15rem',
+                  letterSpacing: '0.01em',
+                  minHeight: '2.2em',
+                }}
+              >
+                {isSuonato ? (
+                  <span>{typedText}<span style={{opacity: typing ? 1 : 0}}>|</span></span>
+                ) : (
+                  images[index].alt
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('carousel-suonato-wrapper')).render(<CenteredCarousel images={imagesSuonato} />);
+    ReactDOM.createRoot(document.getElementById('carousel-produzione-wrapper')).render(<CenteredCarousel images={imagesProduzione} wide={true} />);
+  </script>
+
+
+  <footer id="footer-contatti" style="width:100vw; background: #111; color: var(--turchese); padding: 2.5rem 0 1.2rem 0; margin-top: 3rem; text-align: center; border-top: 2px solid var(--arancione);">
+    <div style="font-size: 1.3rem; font-weight: 600; margin-bottom: 1.1rem; letter-spacing: 1px;">seguimi su</div>
+   <div class="socials" role="navigation" aria-label="Social media links" style="justify-content: center; margin-bottom: 1.2rem;">
+  <!-- Instagram -->
+  <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram" tabindex="0">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff5500">
+      <path d="M7.75 2A5.75 5.75 0 0 0 2 7.75v8.5A5.75 5.75 0 0 0 7.75 22h8.5A5.75 5.75 0 0 0 22 16.25v-8.5A5.75 5.75 0 0 0 16.25 2h-8.5zm0 1.5h8.5a4.25 4.25 0 0 1 4.25 4.25v8.5a4.25 4.25 0 0 1-4.25 4.25h-8.5a4.25 4.25 0 0 1-4.25-4.25v-8.5a4.25 4.25 0 0 1 4.25-4.25zM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 1.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7zm5.75-1.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/>
+    </svg>
+  </a>
+
+  <!-- TikTok -->
+  <a href="https://tiktok.com" target="_blank" rel="noopener" aria-label="TikTok" tabindex="0">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="#ff5500">
+      <path d="M41.5 17.1c-3.2 0-5.8-2.6-5.8-5.8V6.5h-6.1v24.7c0 3.2-2.6 5.8-5.8 5.8s-5.8-2.6-5.8-5.8 2.6-5.8 5.8-5.8c.5 0 1 .1 1.5.2v-6.2c-.5-.1-1-.1-1.5-.1-6.6 0-12 5.4-12 12s5.4 12 12 12 12-5.4 12-12V23c1.7 1.2 3.8 1.9 6 1.9v-7.8z"/>
+    </svg>
+  </a>
+
+<a href="https://youtube.com" target="_blank" rel="noopener" aria-label="YouTube" tabindex="0">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="#ff5500">
+    <path d="M549.7 124.1c-6.3-23.7-24.9-42.3-48.6-48.6C458.8 64 288 64 288 64s-170.8 0-213.1 11.5c-23.7 6.3-42.3 24.9-48.6 48.6C15 166.4 15 256 15 256s0 89.6 11.3 131.9c6.3 23.7 24.9 42.3 48.6 48.6C117.2 448 288 448 288 448s170.8 0 213.1-11.5c23.7-6.3 42.3-24.9 48.6-48.6C561 345.6 561 256 561 256s0-89.6-11.3-131.9zM232 338.5V173.5L372.6 256 232 338.5z"/>
+  </svg>
+</a>
+  <!-- SoundCloud (più alto per coerenza) -->
+  <a href="https://soundcloud.com" target="_blank" rel="noopener" aria-label="SoundCloud" tabindex="0">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 90" fill="#ff5500" style="transform: scaleY(1.15);">
+      <path d="M77.8 43.3c-.9 0-1.7.1-2.6.3-2.5-10.3-11.6-17.8-22.4-17.8-2.6 0-5.1.4-7.4 1.2-1 .3-1.4.8-1.4 1.8v34.7c0 1 .8 1.8 1.8 1.8h32c7.6 0 13.8-6.2 13.8-13.8-.1-7.6-6.3-13.8-13.8-13.8zM40.9 29.2c-.6 0-1.1.5-1.1 1.1v33.2c0 .6.5 1.1 1.1 1.1.6 0 1.1-.5 1.1-1.1V30.3c0-.6-.5-1.1-1.1-1.1zm-5.8 3.4c-.6 0-1.1.5-1.1 1.1v29.9c0 .6.5 1.1 1.1 1.1.6 0 1.1-.5 1.1-1.1V33.7c0-.6-.5-1.1-1.1-1.1zm-5.8 2.5c-.6 0-1.1.5-1.1 1.1v27.4c0 .6.5 1.1 1.1 1.1.6 0 1.1-.5 1.1-1.1V36.1c0-.6-.5-1.1-1.1-1.1zm-5.8 2.5c-.6 0-1.1.5-1.1 1.1v24.9c0 .6.5 1.1 1.1 1.1.6 0 1.1-.5 1.1-1.1V39.6c0-.6-.5-1.1-1.1-1.1zm-5.8 2.6c-.6 0-1.1.5-1.1 1.1v22.3c0 .6.5 1.1 1.1 1.1.6 0 1.1-.5 1.1-1.1V42.2c0-.6-.5-1.1-1.1-1.1zm-5.8 3.4c-.6 0-1.1.5-1.1 1.1v17.4c0 .6.5 1.1 1.1 1.1.6 0 1.1-.5 1.1-1.1V45.6c0-.6-.5-1.1-1.1-1.1z"/>
+    </svg>
+  </a>
 <!-- Spotify -->
 <a href="https://spotify.com" target="_blank" rel="noopener" aria-label="Spotify" tabindex="0">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" fill="#ff5500">
