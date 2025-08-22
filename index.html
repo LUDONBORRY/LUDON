@@ -1841,23 +1841,31 @@ if(bioLangToggle && flagIt && flagUk){
       // isSuonato già definito sopra, non ridefinire
       const [typedText, setTypedText] = React.useState('');
       const [typing, setTyping] = React.useState(false);
+      // Typewriter effect with interruption
       React.useEffect(() => {
         if (!isSuonato) return;
         const location = images[index].location || images[index].alt;
         setTypedText('');
         setTyping(true);
         let i = 0;
+        let cancelled = false;
+        // Store timeout id to clear on unmount or index change
+        let timeoutId;
         const type = () => {
+          if (cancelled) return;
           setTypedText(location.slice(0, i));
           if (i <= location.length) {
             i++;
-            setTimeout(type, 45);
+            timeoutId = setTimeout(type, 45);
           } else {
             setTyping(false);
           }
         };
         type();
-        // eslint-disable-next-line
+        return () => {
+          cancelled = true;
+          if (timeoutId) clearTimeout(timeoutId);
+        };
       }, [index, isSuonato]);
       React.useEffect(() => {
         const handleKey = e => {
