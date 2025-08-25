@@ -1405,7 +1405,7 @@ section h2:hover {
       loading="lazy" 
       title="Spotify Player">
     </iframe>
-    <a href="https://open.spotify.com/artist/6mdiAmATAx73kdxrNrnlao" 
+    <a href="https://open.spotify.com/intl-it/artist/2FeZFXtiCihsnPZu56QIF7?si=kpEMXCRoQqKa2AmfUIoLNQ" 
        target="_blank" rel="noopener" class="cta spotify">Listen more on Spotify</a>
   </div>
 
@@ -1417,7 +1417,7 @@ section h2:hover {
       loading="lazy" 
       title="SoundCloud Player">
     </iframe>
-    <a href="https://soundcloud.com/ludovico-borrini-djludox" 
+    <a href="https://soundcloud.com/ludovico-borrini-djludox/tracks" 
        target="_blank" rel="noopener" class="cta soundcloud">Listen more on SoundCloud</a>
   </div>
 
@@ -1436,7 +1436,7 @@ section h2:hover {
     </iframe>
   </div>
 </div>
-<a href="https://youtube.com/channel/UCxxxx" target="_blank" rel="noopener" class="cta youtube">Watch more on YouTube</a>
+<a href="https://www.youtube.com/@LUDON./videos" target="_blank" rel="noopener" class="cta youtube">Watch more on YouTube</a>
 </section>
 
 <style>
@@ -1660,7 +1660,8 @@ section h2:hover {
   <section id="produzione">
     <h2 class="section-title">MUSIC PRODUCTION</h2>
     <div class="studio-description">
-      <p>Uno studio creativo e professionale, dove ogni progetto prende forma con originalità e cura per un sound unico e riconoscibile.</p>
+    <p id="studio-desc-it">Uno studio creativo e professionale, dove ogni progetto prende forma con originalità e cura per un sound unico e riconoscibile.</p>
+    <p id="studio-desc-en" style="display:none;">A creative and professional studio, where every project takes shape with originality and attention to detail, crafting a unique and distinctive sound.</p>
     </div>
     <!-- Nuovo carosello centrato -->
     <div id="carousel-produzione-wrapper"></div>
@@ -1671,7 +1672,7 @@ section h2:hover {
       <div class="box"><span>VIDEO</span><small> Dai sfogo alla tua fantasia</small></div>
     </div>
     <div style="width:100%;text-align:center;margin:1.5rem 0 0.5rem 0;">
-  <a href="#footer-contatti" style="display:inline-block;font-size:clamp(0.85rem,2.5vw,1.1rem);color:#fff;font-weight:600;letter-spacing:0.01em;cursor:pointer;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:0.5px;">Raccontami la tua idea. Insieme possiamo realizzarla</a>
+  <a href="#footer-contatti" onclick="scrollToId('footer-contatti'); return false;" style="display:inline-block;font-size:clamp(0.85rem,2.5vw,1.1rem);color:#fff;font-weight:600;letter-spacing:0.01em;cursor:pointer;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:0.5px;">Raccontami la tua idea. Insieme possiamo realizzarla</a>
     </div>
   </section>
 
@@ -1686,7 +1687,7 @@ section h2:hover {
     <div class="box"><span>OGGETTI PERSONALIZZATI IN 3D</span><small>Gadget e decorazioni uniche</small></div>
     </div>
     <div style="width:100%;text-align:center;margin:1.5rem 0 0.5rem 0;">
-  <a href="#footer-contatti" style="display:inline-block;font-size:clamp(0.85rem,2.5vw,1.1rem);color:#fff;font-weight:600;letter-spacing:0.01em;cursor:pointer;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:0.5px;">Hai un progetto in mente? Scrivimi in privato per parlarne!</a>
+  <a href="#footer-contatti" onclick="scrollToId('footer-contatti'); return false;" style="display:inline-block;font-size:clamp(0.85rem,2.5vw,1.1rem);color:#fff;font-weight:600;letter-spacing:0.01em;cursor:pointer;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:0.5px;">Hai un progetto in mente? Scrivimi in privato per parlarne!</a>
     </div>
   </section>
 
@@ -1710,22 +1711,42 @@ if(bioLangToggle && flagIt && flagUk){
   bioLangToggle.addEventListener('click', function() {
     bioLang = bioLang === 'it' ? 'en' : 'it';
     document.getElementById('bio-desc-1').textContent = bioTexts[bioLang][0];
-    // Mostra bandiera attiva
+    // Music Production studio description
     if(bioLang === 'it'){
+      document.getElementById('studio-desc-it').style.display = 'block';
+      document.getElementById('studio-desc-en').style.display = 'none';
       flagIt.style.display = 'block';
       flagUk.style.display = 'none';
     }else{
+      document.getElementById('studio-desc-it').style.display = 'none';
+      document.getElementById('studio-desc-en').style.display = 'block';
       flagIt.style.display = 'none';
       flagUk.style.display = 'block';
     }
   });
   // Imposta lingua iniziale
   document.getElementById('bio-desc-1').textContent = bioTexts['it'][0];
+  document.getElementById('studio-desc-it').style.display = 'block';
+  document.getElementById('studio-desc-en').style.display = 'none';
   flagIt.style.display = 'block';
   flagUk.style.display = 'none';
 }
     function scrollToId(id) {
       document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
+      // Se si scrolla al footer tramite i due link speciali, anima solo 'Follow me on'
+      if(id === 'footer-contatti') {
+        var followMe = document.getElementById('footer-follow-title');
+        if(followMe) {
+          // Usa requestAnimationFrame per garantire il reflow e la riattivazione
+          followMe.classList.remove('footer-follow-animate');
+          requestAnimationFrame(function() {
+            followMe.classList.add('footer-follow-animate');
+            setTimeout(function(){
+              followMe.classList.remove('footer-follow-animate');
+            }, 1200);
+          });
+        }
+      }
     }
 
     // Animazione ingresso per la scritta LUDON
@@ -2205,7 +2226,30 @@ if(bioLangToggle && flagIt && flagUk){
 
 
   <footer id="footer-contatti" style="width:100vw; background: #111; color: var(--turchese); padding: 2.5rem 0 1.2rem 0; margin-top: 3rem; text-align: center; border-top: 2px solid var(--arancione);">
-    <div style="font-size: 1.3rem; font-weight: 600; margin-bottom: 1.1rem; letter-spacing: 1px;">seguimi su</div>
+  <h1 class="footer-title-gradient" id="footer-ludon-title" style="font-size: clamp(2.5rem, 13vw, 9.5rem); text-align: center; background: linear-gradient(45deg, var(--turchese), var(--arancione) 60%, #fff700 100%, var(--turchese)); filter: brightness(1.15) saturate(1.15); background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent; animation: gradientFlow 6s ease infinite; margin: 0.3rem 0 0.2rem;">LUDON</h1>
+  <style>
+    @media (min-width: 1025px) {
+      #footer-ludon-title {
+        font-size: clamp(1.7rem, 7vw, 4.2rem) !important;
+      }
+    }
+  </style>
+  <div id="footer-follow-title" class="footer-title-gradient" style="font-size: 1.3rem; font-weight: 600; margin-bottom: 1.1rem; letter-spacing: 1px; background: linear-gradient(45deg, var(--turchese), var(--arancione) 60%, #fff700 100%, var(--turchese)); filter: brightness(1.15) saturate(1.15); background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent; animation: gradientFlow 6s ease infinite; will-change: transform;">Follow me on</div>
+  <style>
+    @keyframes footerFollowPulse {
+      0% { transform: scale(1); }
+      15% { transform: scale(1.22); }
+      28% { transform: scale(1); }
+      43% { transform: scale(1.18); }
+      56% { transform: scale(1); }
+      71% { transform: scale(1.15); }
+      84% { transform: scale(1); }
+      100% { transform: scale(1); }
+    }
+    .footer-follow-animate {
+      animation: footerFollowPulse 1.35s cubic-bezier(.7,0,.3,1) 1 !important;
+    }
+  </style>
    <div class="socials" role="navigation" aria-label="Social media links" style="justify-content: center; margin-bottom: 1.2rem;">
   <!-- Instagram -->
   <a href="https://www.instagram.com/ludon_ludon_ludon/" target="_blank" rel="noopener" aria-label="Instagram" tabindex="0">
@@ -2244,6 +2288,7 @@ if(bioLangToggle && flagIt && flagUk){
     <div style="font-size: 1.1rem; color: #fff; margin-top: 1.2rem;">
       <span class="footer-email-label">email:</span> <a href="mailto:ludonborry@gmail.com" style="color: var(--arancione); text-decoration: underline;">ludonborry@gmail.com</a>
     </div>
+  <div style="font-size: 0.92rem; color: var(--arancione); text-align: center; margin-top: 0.3rem;">For booking & collaborations</div>
   </footer>
   <!-- Cerchio Social Laterale -->
   <div id="social-circle">
